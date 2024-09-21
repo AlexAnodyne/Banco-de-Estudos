@@ -1,0 +1,45 @@
+import tkinter as tk
+from tkinter import messagebox
+import requests
+
+# Funções para buscar tópicos
+def buscar_topicos_banco_de_dados():
+    response = requests.get('http://localhost:8000/pesquisa/banco_de_dados/')
+    if response.status_code == 200:
+        topicos = response.json()  # Assumindo que você retornará JSON no Django
+        messagebox.showinfo("Tópicos de Banco de Dados", "\n".join(topicos))
+    else:
+        messagebox.showerror("Erro", "Não foi possível buscar os tópicos.")
+
+def buscar_topicos_computacao_em_nuvem():
+    response = requests.get('http://localhost:8000/pesquisa/computacao_em_nuvem/')
+    if response.status_code == 200:
+        topicos = response.json()
+        messagebox.showinfo("Tópicos de Computação em Nuvem", "\n".join(topicos))
+    else:
+        messagebox.showerror("Erro", "Não foi possível buscar os tópicos.")
+
+def buscar_topicos_python():
+    response = requests.get('http://localhost:8000/pesquisa/python/')
+    if response.status_code == 200:
+        topicos = response.json()
+        messagebox.showinfo("Tópicos de Python", "\n".join(topicos))
+    else:
+        messagebox.showerror("Erro", "Não foi possível buscar os tópicos.")
+
+# Criação da interface gráfica
+root = tk.Tk()
+root.title("Pesquisa de Tópicos")
+
+# Botões para buscar tópicos
+btn_banco_de_dados = tk.Button(root, text="Tópicos de Banco de Dados", command=buscar_topicos_banco_de_dados)
+btn_banco_de_dados.pack(pady=10)
+
+btn_computacao_em_nuvem = tk.Button(root, text="Tópicos de Computação em Nuvem", command=buscar_topicos_computacao_em_nuvem)
+btn_computacao_em_nuvem.pack(pady=10)
+
+btn_python = tk.Button(root, text="Tópicos de Python", command=buscar_topicos_python)
+btn_python.pack(pady=10)
+
+# Iniciar o loop da interface
+root.mainloop()
